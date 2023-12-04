@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod3-deployment
+  labels:
+    name: app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      name: app3
+  template:
+    metadata:
+      name: pod3
+      labels:
+        name: app3
+    spec:
+      containers:
+      - name: echo3
+        image: registry.cluster.wik.cloud/public/echo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 25%
